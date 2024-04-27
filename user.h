@@ -93,7 +93,6 @@ class user{
     // }
     friend istream& operator>>(istream& input, user& u) {
     input >> u.id >> u.firstname >> u.lastname;
-    cout<<u.id<<u.firstname<<u.lastname;
     // Count the number of friends
     string x;
     // while (input >> x && x != "-1") {
@@ -114,7 +113,6 @@ class user{
     //input >> x >> x >> x;
     
     input>>u.numfriends;
-    cout<<"No:"<< u.numfriends;
     string x2;
     // Read friend list
     u.friendlist = new user*[u.numfriends];
@@ -122,21 +120,16 @@ class user{
         u.friendlist[i] = new user();
         input >> x2;
         (u.friendlist[i])->setfriendid(x2,u.friendlist[i]);
-        cout<<(u.friendlist[i])->getid()<<endl;
     }
 
     // Read liked pages
-    
     input>>u.numpages;
-
-    cout<<"numpages:"<<u.numpages<<endl;
     u.likedpages = new page*[u.numpages];
     for (int i = 0; i < u.numpages; ++i) {
         u.likedpages[i] = new page();
         string y2=" ";
         input >>y2;
         (u.likedpages[i])->setpageid(y2);
-        cout<<(u.likedpages[i])->getpageid();
     }
 
     return input;
@@ -158,6 +151,10 @@ friend ostream& operator<<(ostream& out,user &u)
         post** gettimeline(){return timeline;}
         int getnumfriends(){return numfriends;}
         int getnumposts(){return numposts;}
+        void setuserid(string i)
+        {
+            id=i;
+        }
         void addFriend(user* friendToAdd) {
         // Check if friendToAdd is not null and user is not trying to add themselves as friend
         if (friendToAdd != nullptr && friendToAdd != this) {
@@ -248,7 +245,8 @@ friend ostream& operator<<(ostream& out,user &u)
                 }
                 delete[] timeline;
             }
-            newpostlist[numfriends]=newpost;
+            newpostlist[numposts]=newpost;
+
             timeline=newpostlist;
             numposts=numposts+1;
         }

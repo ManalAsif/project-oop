@@ -1,7 +1,8 @@
 #ifndef comment_h
 #define comment_h
 #include <iostream>
-
+#include "user.h"
+#include "post.h"
 using namespace std;
 class user;
 class post;

@@ -17,11 +17,12 @@ class page
         int numposts;
     public:
 
-        page(string idn="0x",string titlen=" ",int numpostsn=0)
+        page(string idn="0x",string titlen=" ")
         {
             id=idn;
             title=titlen;
-            numposts=numpostsn;
+            numposts=0;
+            likes=0;
         }
         string getpageid(){return id;}
         user* getowner(){return owner;}
@@ -57,6 +58,7 @@ class page
         {
             page p;
             input>>p.id;
+            input>>p.likes;
             input>>p.title;
             ptrp=&p;
             return input;
@@ -69,7 +71,10 @@ class page
         {
             id=idn;
         }
-        
+        void setlikes(int x)
+        {
+            likes=x;
+        }
 
 
 };

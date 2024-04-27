@@ -21,6 +21,12 @@ class activity{
     {
         return type;
     }
+    friend ostream&operator<<(ostream &out,activity a)
+    {
+        cout<<endl;
+        cout<<"type:"<<a.type<<endl<<endl;
+        cout<<"value:"<<a.value<<endl<<endl;
+    }
 };
 class date
 {
@@ -94,6 +100,7 @@ class post
         string text;
         int likes;
         user** likedby;
+        string *userid;
         int numcomments;
         comment** comments;
         date shareddate;
@@ -112,12 +119,24 @@ class post
         user** getlikedby(){return likedby;}
         date getshareddate(){return shareddate;}
         activity getactivity(){return activityn;}
-        bool addpostlike()
+        bool addpostlike(user*by)
         {
             if(likes++<10)
             {
-                likes++;
-                return true;
+                user **newlikelist=new user*[likes+1];
+                if(likes!=0)
+                {
+                for (int i = 0; i < likes; i++)
+                {
+                    //cout<<"end";
+                    newlikelist[i]=likedby[i];
+                }
+                delete[] likedby;
+                }
+                newlikelist[likes]=by;            
+                likedby=newlikelist;
+            
+            likes=likes+1;
             }
             else
             {
@@ -129,21 +148,25 @@ class post
         {
             if(numcomments<10)
             {
-            comment **newcommentlist=new comment*[numcomments+1];
-            for (int i = 0; i < numcomments; i++)
-            {
-                newcommentlist[i]=comments[i];
-            }
-            newcommentlist[numcomments]=commentnew;
-            delete[] comments;
-            comments =newcommentlist;
-            numcomments++;
-            return true;
+                comment **newcommentlist=new comment*[numcomments+1];
+                for (int i = 0; i < numcomments; i++)
+                {
+                    newcommentlist[i]=comments[i];
+                }
+                newcommentlist[numcomments]=commentnew;
+                delete[] comments;
+                comments =newcommentlist;
+                numcomments++;
+                return true;
             }
             else
             {
                 return false;
             }
+        }
+        user *getlikedby(int i)
+        {
+            return likedby[i];
         }
        friend istream& operator>>(istream &input,post *p)
        {
@@ -155,8 +178,52 @@ class post
             p->text=p->text+" "+x;
         }
         input>>p->likes;
+        //cout<<p->likes;
+        // p->likedby=new user*[p->likes];
+        p->userid=new string[p->likes];
+        for (int i = 0; i < p->likes; i++)
+        {
+            
+            input >> p->userid[i];
+        //    (p->likedby[i])->setuserid(userId);
+        //     p->addpostlike(p->likedby[i]);
+        //     string userId;
+        // input >> userId;
+        // p->likedby[i] = new user(userId);
+            // string x;
+            // input>>x;
+            // cout<<x;
+            // user *nu=new user();
+            // nu->setuserid(x);
+            // likedby[i]=nu;
+        }
+        string type,value;
+        input>>type>>value;
+        activity a1(type,value);
+        p->activityn=a1;
+
         input>>p->shareddate;
         
+       }
+    void addlikedby(user *u)
+    {
+        
+        
+    }
+    string* getuserid()
+    {
+        return userid;
+    }
+       friend ostream&operator<<(ostream &out,post *npost)
+       {
+            cout<<"POST ID: "<<npost->getpostid()<<endl<<endl;
+            cout<<"DESCRIPTION: "<<npost->gettext()<<endl<<endl;
+            cout<<"likes:"<<npost->getlikes()<<endl<<endl;
+            cout<<"SHARED DATE:";
+            cout<<npost->getshareddate()<<endl<<endl;
+            cout<<"activity";
+            cout<<npost->getactivity();
+            
        }
 };
 #endif
