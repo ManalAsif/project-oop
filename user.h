@@ -30,7 +30,7 @@ class user{
             friendlist=friendlistn;
             likedpages=likedpagesn;
             timeline=timelinen;
-            cout<<"user const()"<<firstname<<endl;
+            //cout<<"user const()"<<firstname<<endl;
 
         }
     // friend istream& operator>>(istream& input, user *uptr)

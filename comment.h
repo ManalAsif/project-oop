@@ -11,25 +11,55 @@ class comment
 {
     private: 
     string commentid;
-    const user* userptr;
+    user* userptr;
     string text;
-    const post* postptr;
+    post* postptr;
     public:
-    comment(string commentidn,const user* usern,string textn,post* postn)
+    comment(){commentid=" ",userptr=nullptr,text=" ",postptr=nullptr;}
+    comment(string commentidn,user* usern,string textn,post* postn)
     {
         commentid=commentidn;
         userptr=usern;
         text=textn;
         postptr=postn;
     }
+    friend ostream& operator<<(ostream &out,comment &c)
+    {
+        out<<"commentid: ";
+        out<<c.commentid<<endl;
+        //out<<c.userptr;
+        out<<"text: ";
+        out<<c.text<<endl;
+        //out<<c.postptr;
+        return out;
+    }
+    friend istream &operator>>(istream &in,comment &c)
+    {
+        
+        string uid,pid;
+        in>>pid;
+
+        //cout<<pid<<endl;
+        in>>c.commentid;
+        cout<<endl<<c.commentid<<endl;
+        //c.postptr->setpostid(pid);
+        in>>uid;
+        cout<<uid<<endl;
+        //c.userptr->setuserid(uid);
+        string x=" ";
+        while(x!=".")
+        {
+            in>>x;
+            c.text=c.text+" "+x;
+        }
+        cout<<c.text<<endl;
+        return in;
+    }
     string getcommentid()
     {
         return commentid;
     }
-    const user* getuser()
-    {
-        return userptr;
-    }
+    
     string gettext()
     {
         return text;

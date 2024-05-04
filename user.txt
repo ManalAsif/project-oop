@@ -1,8 +1,8 @@
 u1 Amna Akram 3 u2 u3 u4 2 p1 p2
 u2 Muhammad Ali 3 u1 u5 u6 2 p2 p3
 u3 Waheed Khan	2 u1 u7 0
-u4	Burhan Tahir 4 u1	u8	u9	u10	1	p10
-u5	Hassan Sohail	1 u2	2	p9	p10
+u4	Burhan Tahir 4 u1	u8	u9	u10	2	p1 p2
+u5	Hassan Sohail	1 u2	2	p9	p6
 u6	Saad Ali	2 u2	u11	1	p8	
 u7	Abdullah Nadeem	3 u3	u11	u12	4	p1	p2	p5	p9	
 u8	Nimra Batool	2 u4	u11	0

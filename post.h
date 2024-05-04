@@ -99,10 +99,10 @@ class post
         string postid;
         string text;
         int likes;
-        user** likedby;
+        user* likedby[10];
         string *userid;
         int numcomments;
-        comment** comments;
+        comment comments[10];
         date shareddate;
         activity activityn;
     public:
@@ -111,52 +111,76 @@ class post
             postid=postidn;
             text=textn;
             shareddate=daten;
+            
         }
         string getpostid(){return postid;}
+        void setpostid(string id){postid=id;}
         int getnumcomments(){return numcomments;}
         string gettext(){return text;}
         int getlikes(){return likes;}
         user** getlikedby(){return likedby;}
         date getshareddate(){return shareddate;}
         activity getactivity(){return activityn;}
+//         bool addpostlike(user* by) {
+//     if (likes < maxlikes) {
+//         user** newlikelist = new user*[likes + 1];
+//         for (int i = 0; i < likes; i++) {
+//             newlikelist[i] = likedby[i];
+//         }
+//         newlikelist[likes] = by;
+//         delete[] likedby;
+//         likedby = newlikelist;
+//         likes++; // Increment the count of likes
+//         return true;
+//     } else {
+//         return false;
+//     }
+// }
+        bool adduserid(string x)
+        {
+            userid[likes]=x;
+        }
         bool addpostlike(user*by)
         {
-            if(likes++<10)
+            if(likes<10)
             {
-                user **newlikelist=new user*[likes+1];
-                if(likes!=0)
-                {
-                for (int i = 0; i < likes; i++)
-                {
-                    //cout<<"end";
-                    newlikelist[i]=likedby[i];
-                }
-                delete[] likedby;
-                }
-                newlikelist[likes]=by;            
-                likedby=newlikelist;
-            
-            likes=likes+1;
+                
+                likedby[likes]=by;
+                likes++;
+                cout<<"in:"<<likes;
+                cout<<"added";
+                
+                return true;
             }
             else
             {
                 return false;
                 
             }
+            cout<<"out0";
         }
-        bool addcomment(comment *commentnew)
+        bool addcomment(comment commentnew)
         {
+            //cout<<"hello";
             if(numcomments<10)
             {
-                comment **newcommentlist=new comment*[numcomments+1];
-                for (int i = 0; i < numcomments; i++)
-                {
-                    newcommentlist[i]=comments[i];
-                }
-                newcommentlist[numcomments]=commentnew;
-                delete[] comments;
-                comments =newcommentlist;
+                // comment **newcommentlist=new comment*[numcomments+1];
+                // for (int i = 0; i < numcomments; i++)
+                // {
+                //     newcommentlist[i]=comments[i];
+                // }
+                // newcommentlist[numcomments]=commentnew;
+                // delete[] comments;
+                // comments =newcommentlist;
+                // numcomments++;
+                // return true;
+                comments[numcomments]=commentnew;
                 numcomments++;
+                // for (int i = 0; i < numcomments; i++)
+                // {
+                //     cout<<comments[i]<<endl;
+                // }
+                
                 return true;
             }
             else
@@ -168,6 +192,10 @@ class post
         {
             return likedby[i];
         }
+        comment getcomment(int i)
+        {
+            return comments[i];
+        }
        friend istream& operator>>(istream &input,post *p)
        {
         input>>p->postid;
@@ -178,7 +206,7 @@ class post
             p->text=p->text+" "+x;
         }
         input>>p->likes;
-        //cout<<p->likes;
+        cout<<p->likes;
         // p->likedby=new user*[p->likes];
         p->userid=new string[p->likes];
         for (int i = 0; i < p->likes; i++)
@@ -203,11 +231,12 @@ class post
         p->activityn=a1;
 
         input>>p->shareddate;
+        //p->likes=0;
         
        }
     void addlikedby(user *u)
     {
-        
+
         
     }
     string* getuserid()

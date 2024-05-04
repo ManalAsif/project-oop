@@ -1,0 +1,14 @@
+13	
+post1 c1	u1	Best of Luck .
+post1 c2	u7	Interesting .
+post3 c3	u6	Any plans for Get Together? .
+post3 c4	u7	Yes BBQ .
+post3 c5 u8	Lunch Buffet please .
+post5 c6 p1	Followers please try this recipe and give your feedback .
+post5 c7 u1	Yummy .
+post5 c8 u11	One pink tea for me .
+post7 c9 u12	Rumi is great .
+post8 c10 u3	Happy Birthday Aunty .
+post9 c11 u11	Happy Birthday Uncle .
+post4 c12 u7	Good Luck for your Result .
+post10 c13 u11	Celebrations??? .

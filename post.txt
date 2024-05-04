@@ -11,10 +11,10 @@ post2 This is the second post .
 27 4 2024
 u4
 post3 This is the third post . 
-3 u8 u9 u10
+3 u8 u9 u1
 27 4 2024 
 1 excited
-u6
+u4
 post4 This is the fourth post . 
 4 u1 u2 u3 u4 
 3 cake
