@@ -231,7 +231,7 @@ class post
         p->activityn=a1;
 
         input>>p->shareddate;
-        //p->likes=0;
+        p->likes=0;
         
        }
     void addlikedby(user *u)

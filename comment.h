@@ -25,10 +25,10 @@ class comment
     }
     friend ostream& operator<<(ostream &out,comment &c)
     {
-        out<<"commentid: ";
+        out<<"\tcommentid: ";
         out<<c.commentid<<endl;
         //out<<c.userptr;
-        out<<"text: ";
+        out<<"\ttext: ";
         out<<c.text<<endl;
         //out<<c.postptr;
         return out;
@@ -41,10 +41,10 @@ class comment
 
         //cout<<pid<<endl;
         in>>c.commentid;
-        cout<<endl<<c.commentid<<endl;
+        //cout<<endl<<c.commentid<<endl;
         //c.postptr->setpostid(pid);
         in>>uid;
-        cout<<uid<<endl;
+        cout<<"comment by: "<<uid<<endl;
         //c.userptr->setuserid(uid);
         string x=" ";
         while(x!=".")
@@ -52,7 +52,7 @@ class comment
             in>>x;
             c.text=c.text+" "+x;
         }
-        cout<<c.text<<endl;
+        //cout<<c.text<<endl;
         return in;
     }
     string getcommentid()
