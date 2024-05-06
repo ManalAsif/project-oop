@@ -101,7 +101,7 @@ class socialnetworkapp:public date
             {
                 
                 user *f=currentuser->getfriend(i);
-                cout<<"friend: "<<f->getid()<<endl;
+                cout<<"\t\tfriend: "<<f->getid()<<endl;
                 for (int j = 0; j < f->getnumposts(); j++)
                 {
                     post *p=f->getpost(j);
@@ -109,9 +109,9 @@ class socialnetworkapp:public date
                 }
             }
             string postid,text;
-            cout<<"enter post id";
+            cout<<"\t\tenter post id: ";
             cin>>postid;
-            cout<<"enter comment";
+            cout<<"\t\tenter comment: ";
      
             string x=" ";
             while(x!=".")
@@ -133,7 +133,7 @@ class socialnetworkapp:public date
             {
                 
                 user *f=currentuser->getfriend(i);
-                cout<<"friend: "<<f->getid()<<endl;
+                cout<<"\t\tfriend: "<<f->getid()<<endl;
                 for (int j = 0; j < f->getnumposts(); j++)
                 {
                     post *p=f->getpost(j);
@@ -141,7 +141,7 @@ class socialnetworkapp:public date
                 }
             }
             
-            cout<<"enter id";
+            cout<<"enter id: ";
             cin>>id;
             viewpost(id);
         }
@@ -152,7 +152,7 @@ class socialnetworkapp:public date
             {
                 
                 user *f=currentuser->getfriend(i);
-                cout<<"friend: "<<f->getid()<<endl;
+                cout<<"\t\tfriend: "<<f->getid()<<endl;
                 for (int j = 0; j < f->getnumposts(); j++)
                 {
                     post *p=f->getpost(j);
@@ -160,7 +160,7 @@ class socialnetworkapp:public date
                 }
             }
             
-            cout<<"enter id";
+            cout<<"enter id: ";
             cin>>id;
             likepost(id);
          }
@@ -197,6 +197,7 @@ class socialnetworkapp:public date
                 post *post=currentpage->getpost(i);
                 cout<<post;
                 viewcomment(post->getpostid());
+                viewlikedbylist(post->getpostid());
                }
             }
 
@@ -224,8 +225,8 @@ class socialnetworkapp:public date
 
                 } 
                 cout<<"NEW LIKED BY LIST: "<<endl;
-                cout<<"ID: "<<currentuser->getId()<<endl;
-                cout<<"name:"<<currentuser->getfirstname()<<" "<<currentuser->getlastname()<<endl;
+                cout<<"ID: "<<currentuser->getId()<<endl<<endl;
+                cout<<"name:"<<currentuser->getfirstname()<<" "<<currentuser->getlastname()<<endl<<endl;
                 viewlikedbylist(id);
                 
                }
@@ -246,6 +247,9 @@ class socialnetworkapp:public date
                if(currentpost->getpostid()==id)
                {
                 cout<<currentpost;
+                viewcomment(id);
+                viewlikedbylist(id);
+
                 
                }
             }
@@ -254,25 +258,18 @@ class socialnetworkapp:public date
     }
     void addcommenttopost(string postid,string commenttext)
     {
-        cout<<"frieds:"<<currentuser->getnumfriends();
         for (int i = 0; i < currentuser->getnumfriends(); i++)
         {
             user*frienduser=currentuser->getfriend(i);
-            cout<<"post num:"<<frienduser->getnumposts();
             for (int j = 0; j < frienduser->getnumposts(); j++)
-            {
-                cout<<"in";
-                
+            {                
                 post*currentpost=frienduser->getpost(j);
-            
                 if(currentpost->getpostid()==postid)
                 {
                      int numcomments;
                         string filename="comment.txt";
                         ifstream file(filename);
-                        cout<<"In";
                         file>>numcomments;
-                        cout<<numcomments;
                         int x=0;
                         for(int i=0;i<numcomments;i++)
                         {
@@ -289,7 +286,6 @@ class socialnetworkapp:public date
                             }
                         }
                     comment newcomment("c14",currentuser,commenttext,currentpost);
-                    cout<<"comment";
                     if(currentpost->addcomment(newcomment))
                     {
                         cout<<"Comment added successfully to the post with ID " << postid << endl;
@@ -541,12 +537,7 @@ class socialnetworkapp:public date
                     user *uptr=&u2;
                     p->addpostlike(uptr);
                      cout<<endl<<"ID:"<<p->getlikedby(n)->getId()<<endl;
-                     cout<<"Name:  "<<p->getlikedby(n)->getfirstname()<<" "<<p->getlikedby(n)->getlastname()<<endl;                    
-                    // cout<<p->getlikedby(n);
-                    //userlist[n]=uptr;
-                    //  cout<<userlist[n]->getid();
-                   
-                                   
+                     cout<<"Name:  "<<p->getlikedby(n)->getfirstname()<<" "<<p->getlikedby(n)->getlastname()<<endl;                                                       
                 }
                 
         
@@ -636,10 +627,9 @@ class socialnetworkapp:public date
         }
     void viewtimeline()
     {
-        cout<<currentuser->getnumposts();
         for (int i = 0; i < currentuser->getnumposts(); i++)
         {
-            cout<<"in";
+           
             post *npost=new post;
             npost=currentuser->getpost(i);
             cout<<npost;
@@ -653,6 +643,7 @@ int main()
 {
     
     string userid;
+    cout<<"\t\tENTER USER ID:";
     cin>>userid;
     user u;
     string filename="user.txt";

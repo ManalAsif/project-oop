@@ -44,7 +44,6 @@ class comment
         //cout<<endl<<c.commentid<<endl;
         //c.postptr->setpostid(pid);
         in>>uid;
-        cout<<"comment by: "<<uid<<endl;
         //c.userptr->setuserid(uid);
         string x=" ";
         while(x!=".")

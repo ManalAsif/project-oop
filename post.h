@@ -146,10 +146,7 @@ class post
             {
                 
                 likedby[likes]=by;
-                likes++;
-                cout<<"in:"<<likes;
-                cout<<"added";
-                
+                likes++;                
                 return true;
             }
             else
@@ -206,7 +203,7 @@ class post
             p->text=p->text+" "+x;
         }
         input>>p->likes;
-        cout<<p->likes;
+        cout<<"total no. of likes:\t"<<p->likes<<endl;
         // p->likedby=new user*[p->likes];
         p->userid=new string[p->likes];
         for (int i = 0; i < p->likes; i++)
@@ -247,7 +244,6 @@ class post
        {
             cout<<"POST ID: "<<npost->getpostid()<<endl<<endl;
             cout<<"DESCRIPTION: "<<npost->gettext()<<endl<<endl;
-            cout<<"likes:"<<npost->getlikes()<<endl<<endl;
             cout<<"SHARED DATE:";
             cout<<npost->getshareddate()<<endl<<endl;
             cout<<"activity";
