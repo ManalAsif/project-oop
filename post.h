@@ -268,13 +268,12 @@ class post
             cout<<npost->getshareddate()<<endl<<endl;
             cout<<"activity";
             cout<<npost->getactivity()<<endl;
-           cout<<"likes: "<<npost->gettemplikes()<<endl<<endl;
+           cout<<"likes: "<<npost->gettemplikes()<<endl;
            if(npost->getmemorydate()!=0 &&npost->getmemorytext()!=" ")
            {
              cout<<"memory date: "<<npost->getmemorydate()<<endl<<endl;
             cout<<"memory text: "<<npost->getmemorytext()<<endl<<endl;
            }
-           cout<<"\n\ngoing out of operator\n\n";
            return out;
             
        }

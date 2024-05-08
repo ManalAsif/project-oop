@@ -32,7 +32,7 @@ class socialnetworkapp:public date
     void setcurrentuser(user *u)
     {
         *currentuser=*u;
-        cout<<"set";
+        cout<<u->getfirstname()<<" "<<u->getlastname()<<" succesfully set as current user"<<endl<<endl;
         
     }
     void run()
@@ -42,7 +42,7 @@ class socialnetworkapp:public date
         string currentUserName = currentuser->getfirstname();
         char border = '-';
 	    Color(5);
-
+        cout<<endl;
         for (int i = 0; i < 65; i++)
         {
             cout << border; 
@@ -405,6 +405,8 @@ void sharememory(string postid,string text)
 }
     void viewcomment(string postid)
     {
+        Color(4);
+        cout<<"<<<<<<<<<<<<<<<<<<<<< COMMENTS >>>>>>>>>>>>>>>>>>>>>"<<endl;
         int numcomments;
          string filename="comment.txt";
                         ifstream file(filename);
@@ -430,23 +432,24 @@ void sharememory(string postid,string text)
     }
     void viewhome()
     {
-        cout<<"<<<<<<<<<<<<<<<<<<<<<<<< HOME >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
+        cout<<"<<<<<<<<<<<<<<<<<<<<<<<< HOME >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"<<endl;
         date currentdate(27,4,2024);
-        cout<<currentdate;
-        cout<<currentuser->getid();
-        cout<<(*currentuser).getnumfriends();
     for(int i=0;i<(*currentuser).getnumfriends();i++)
     {
 
         user *frienduser=(*currentuser).getfriend(i);
-        cout<<(*frienduser).getnumposts()<<endl;
+        Color(3);
+        cout<<"--------------------------------------------------------------------"<<endl<<endl;
+        cout<<i+1<<")  FRIEND:    "<<frienduser->getfirstname()<<"  "<<frienduser->getlastname()<<endl<<endl;
         for(int j=0;j<(*frienduser).getnumposts();j++)
         {
             post *post=(*frienduser).getpost(j);
             date postdate= (*post).getshareddate();           
             if(currentdate.differenceInSeconds(postdate)>=0 && (currentdate.differenceInSeconds(postdate))<=86400)
             {
-                cout<<i<<")  FRIEND:    "<<frienduser->getfirstname()<<"  "<<frienduser->getlastname()<<endl<<endl;
+                Color(3);
+                cout<<"--------------------------------------------------------------------"<<endl<<endl;
+                Color(5);
                 cout<<post;
                 viewcomment(post->getpostid());
                 viewlikedbylist(post->getpostid());               
@@ -459,15 +462,16 @@ void sharememory(string postid,string text)
            cout<<(*currentpage).getnumposts()<<endl;
            for(int j=0;j<(*currentpage).getnumposts();j++)
            {
-            post *post=(*currentpage).getpost(j);
-            date postdate= (*post).getshareddate();
-            if(currentdate.differenceInSeconds(postdate)>=0 && (currentdate.differenceInSeconds(postdate))<=86400)
-            {
-                cout<<"page: "<<currentpage->getpageid()<<endl<<endl;
-               cout<<post;
-               viewcomment(post->getpostid());
-               viewlikedbylist(post->getpostid());
-            }
+                post *post=(*currentpage).getpost(j);
+                date postdate= (*post).getshareddate();
+                if(currentdate.differenceInSeconds(postdate)>=0 && (currentdate.differenceInSeconds(postdate))<=86400)
+                {
+                    Color(5);
+                    cout<<"page: "<<currentpage->getpageid()<<endl<<endl;
+                    cout<<post;
+                    viewcomment(post->getpostid());
+                    viewlikedbylist(post->getpostid());
+                }
             }
         
         
@@ -496,9 +500,9 @@ void sharememory(string postid,string text)
                 post *p=new post;
                 //file.seekg(currentPosition - streampos());
                 file>>p;
-                cout<<p;
-                cout<<" foundddddddddddddd id:currentuser "<<p->getpostid()<<endl;
-                cout<<p->gettext()<<endl;
+                // cout<<p;
+                // cout<<" foundddddddddddddd id:currentuser "<<p->getpostid()<<endl;
+                // cout<<p->gettext()<<endl;
                 currentuser->addpost(p);
             }
         }
@@ -513,8 +517,8 @@ void sharememory(string postid,string text)
             
             user *f=currentuser->getfriend(i);
             string id=f->getId();
-            cout<<"friend"<<i<<endl;
-            cout<<f->getId()<<endl;
+            // cout<<"friend"<<i<<endl;
+            // cout<<f->getId()<<endl;
             
             for (int j = 0; j < num*3; j++)
             {
@@ -529,10 +533,10 @@ void sharememory(string postid,string text)
                 {
                     post *p=new post;
                     file>>p;
-                    cout<<p;
+                    // cout<<p;
                     f->addpost(p);
-                    cout<<" founddddddddddddddid:"<<p->getpostid()<<endl;
-                    cout<<p->gettext()<<endl;
+                    // cout<<" founddddddddddddddid:"<<p->getpostid()<<endl;
+                    // cout<<p->gettext()<<endl;
                     //f->addpost(p);
             }
            
@@ -542,7 +546,7 @@ void sharememory(string postid,string text)
         
         for (int i = 0; i < currentuser->getnumpages(); i++)
         {
-            cout<<"pages..................."<<endl;
+            //cout<<"pages..................."<<endl;
             string x;
             file.clear();
             file.seekg(0, std::ios::beg);
@@ -568,8 +572,8 @@ void sharememory(string postid,string text)
                     post *p=new post;
                     file>>p;
                     f->uploadpost(p);
-                    cout<<" founddddddddddddddid:"<<p->getpostid()<<endl;
-                    cout<<p->gettext()<<endl;
+                    // cout<<" founddddddddddddddid:"<<p->getpostid()<<endl;
+                    // cout<<p->gettext()<<endl;
                 }
             }
            
@@ -672,9 +676,9 @@ void sharememory(string postid,string text)
         return p;
     }
     void viewlikedbylist(string id)
-    {  
+    {  Color(8);
         post *p=findpostbyid(id);
-        cout<<"liked by>>>>>>>>>>>>>>>"<<endl;
+        cout<<"<<<<<<<<<<<<<<<<<<<<<<<liked by>>>>>>>>>>>>>>>>>>>>>"<<endl;
                string *list=p->getuserid();
                 string filename1="user.txt";
                 ifstream file(filename1); 
@@ -685,7 +689,6 @@ void sharememory(string postid,string text)
                 // {
                 //     num++;
                 // }
-                cout<<"num; "<<num<<endl;
                 for (int n = 0; n <num; n++)
                 {
                     file.clear();
@@ -725,7 +728,7 @@ void sharememory(string postid,string text)
     }
     void setfriendnames(string s)
     {
-        cout<<"friend func"<<endl;
+        //cout<<"friend func"<<endl;
         string filename=s;
         ifstream file(filename); 
         for (int i = 0; i < currentuser->getnumfriends(); i++)
@@ -735,8 +738,8 @@ void sharememory(string postid,string text)
         
             user *f=currentuser->getfriend(i);
             string id=f->getId();
-            cout<<"friend"<<i<<endl;
-            cout<<f->getId()<<endl;
+            // cout<<"friend"<<i<<endl;
+            // cout<<f->getId()<<endl;
             string line1;
             int count=0;
                 for (char c:id)
@@ -760,7 +763,7 @@ void sharememory(string postid,string text)
                    
                     f->setfirstname(fname);
                     f->setlastname(lname);
-                    cout<<f->getfirstname()<<endl;
+                    //cout<<f->getfirstname()<<endl;
             }
 
    
@@ -775,7 +778,7 @@ void sharememory(string postid,string text)
             {
                 page *f=currentuser->getpage(i);
                 string id=f->getpageid();
-                cout<<id;
+                //cout<<id;
                string line1;
                int count=0;
                 for (char c:id)
@@ -800,7 +803,7 @@ void sharememory(string postid,string text)
                 f->setpageid(pageid);
                 f->settittle(title);
                 f->setlikes(likes);
-                cout<<id<<endl<<"title:"<<title<<endl;
+                //cout<<id<<endl<<"title:"<<title<<endl;
 
 
             }
