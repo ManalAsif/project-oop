@@ -14,6 +14,7 @@ class comment
     user* userptr;
     string text;
     post* postptr;
+    string postid;
     public:
     comment(){commentid=" ",userptr=nullptr,text=" ",postptr=nullptr;}
     comment(string commentidn,user* usern,string textn,post* postn)
@@ -23,6 +24,16 @@ class comment
         text=textn;
         postptr=postn;
     }
+
+    //getters
+    string getpostid() {return postid;}
+
+
+    //setters
+    void setpostid(string pid) {pid = postid;}
+
+
+
     friend ostream& operator<<(ostream &out,comment &c)
     {
         out<<"\tcommentid: ";
@@ -38,14 +49,14 @@ class comment
         
         string uid,pid;
         in>>pid;
-
+        c.postid = pid;
         //cout<<pid<<endl;
         in>>c.commentid;
         //cout<<endl<<c.commentid<<endl;
         //c.postptr->setpostid(pid);
         in>>uid;
         //c.userptr->setuserid(uid);
-        string x=" ";
+        string x = " ";
         while(x!=".")
         {
             in>>x;
@@ -53,6 +64,7 @@ class comment
         }
         //cout<<c.text<<endl;
         return in;
+
     }
     string getcommentid()
     {

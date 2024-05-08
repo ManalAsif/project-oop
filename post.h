@@ -99,20 +99,37 @@ class post
         string postid;
         string text;
         int likes;
+        int templikes;
         user* likedby[10];
-        string *userid;
+        string userid[10];
         int numcomments;
         comment comments[10];
         date shareddate;
         activity activityn;
+        string memorytext;
+        int diffdate;
     public:
         post(const string &postidn=" ",const string& textn=" ",date daten=0)
         {
             postid=postidn;
             text=textn;
             shareddate=daten;
+            memorytext=" ";
+            diffdate=0;
+            for (int i = 0; i < 10; i++)
+            {
+                userid[i]=" ";
+            }
+            
+
             
         }
+        void setmemorydate(int date){
+            cout<<"date"<<date;
+            diffdate=date;}
+        int getmemorydate(){return diffdate;}
+        string getmemorytext(){return memorytext;}
+        void setmemorytext(string text){memorytext=text;}
         string getpostid(){return postid;}
         void setpostid(string id){postid=id;}
         int getnumcomments(){return numcomments;}
@@ -121,6 +138,7 @@ class post
         user** getlikedby(){return likedby;}
         date getshareddate(){return shareddate;}
         activity getactivity(){return activityn;}
+        int gettemplikes(){return templikes;}
 //         bool addpostlike(user* by) {
 //     if (likes < maxlikes) {
 //         user** newlikelist = new user*[likes + 1];
@@ -146,7 +164,8 @@ class post
             {
                 
                 likedby[likes]=by;
-                likes++;                
+                likes++;    
+                cout<<likes;           
                 return true;
             }
             else
@@ -154,7 +173,7 @@ class post
                 return false;
                 
             }
-            cout<<"out0";
+           
         }
         bool addcomment(comment commentnew)
         {
@@ -203,13 +222,14 @@ class post
             p->text=p->text+" "+x;
         }
         input>>p->likes;
-        cout<<"total no. of likes:\t"<<p->likes<<endl;
+        //cout<<"total no. of likes:\t"<<p->likes<<endl;
         // p->likedby=new user*[p->likes];
-        p->userid=new string[p->likes];
+        p->templikes=p->likes;
         for (int i = 0; i < p->likes; i++)
         {
             
             input >> p->userid[i];
+            //cout<<endl<<p->userid[i]<<endl;
         //    (p->likedby[i])->setuserid(userId);
         //     p->addpostlike(p->likedby[i]);
         //     string userId;
@@ -247,7 +267,15 @@ class post
             cout<<"SHARED DATE:";
             cout<<npost->getshareddate()<<endl<<endl;
             cout<<"activity";
-            cout<<npost->getactivity();
+            cout<<npost->getactivity()<<endl;
+           cout<<"likes: "<<npost->gettemplikes()<<endl<<endl;
+           if(npost->getmemorydate()!=0 &&npost->getmemorytext()!=" ")
+           {
+             cout<<"memory date: "<<npost->getmemorydate()<<endl<<endl;
+            cout<<"memory text: "<<npost->getmemorytext()<<endl<<endl;
+           }
+           cout<<"\n\ngoing out of operator\n\n";
+           return out;
             
        }
 };
