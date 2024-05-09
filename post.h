@@ -72,26 +72,6 @@ class date
         return in;
     }
 };
-// class date
-// {
-//     private:
-//     int day;
-//     int month;
-//     int year;
-//     public:
-//     date(int dayn=0,int monthn=0,int yearn=0)
-//     {
-//         day=dayn;
-//         month=monthn;
-//         year=yearn;
-//     }
-// };
-
-const int maxcomments=10;
-    const int maxlikes=10;
-    const int maxtextlenth=100;
-
-
 class post
 {
     private:
@@ -120,13 +100,8 @@ class post
             {
                 userid[i]=" ";
             }
-            
-
-            
         }
-        void setmemorydate(int date){
-            cout<<"date"<<date;
-            diffdate=date;}
+        void setmemorydate(int date){diffdate=date;}
         int getmemorydate(){return diffdate;}
         string getmemorytext(){return memorytext;}
         void setmemorytext(string text){memorytext=text;}
@@ -139,21 +114,9 @@ class post
         date getshareddate(){return shareddate;}
         activity getactivity(){return activityn;}
         int gettemplikes(){return templikes;}
-//         bool addpostlike(user* by) {
-//     if (likes < maxlikes) {
-//         user** newlikelist = new user*[likes + 1];
-//         for (int i = 0; i < likes; i++) {
-//             newlikelist[i] = likedby[i];
-//         }
-//         newlikelist[likes] = by;
-//         delete[] likedby;
-//         likedby = newlikelist;
-//         likes++; // Increment the count of likes
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
+        string* getuserid(){return userid;}
+        comment getcomment(int i){return comments[i];}
+        user* getlikedby(int n){return likedby[n];}
         bool adduserid(string x)
         {
             userid[likes]=x;
@@ -164,8 +127,7 @@ class post
             {
                 
                 likedby[likes]=by;
-                likes++;    
-                cout<<likes;           
+                likes++;               
                 return true;
             }
             else
@@ -177,26 +139,10 @@ class post
         }
         bool addcomment(comment commentnew)
         {
-            //cout<<"hello";
             if(numcomments<10)
             {
-                // comment **newcommentlist=new comment*[numcomments+1];
-                // for (int i = 0; i < numcomments; i++)
-                // {
-                //     newcommentlist[i]=comments[i];
-                // }
-                // newcommentlist[numcomments]=commentnew;
-                // delete[] comments;
-                // comments =newcommentlist;
-                // numcomments++;
-                // return true;
                 comments[numcomments]=commentnew;
-                numcomments++;
-                // for (int i = 0; i < numcomments; i++)
-                // {
-                //     cout<<comments[i]<<endl;
-                // }
-                
+                numcomments++;                
                 return true;
             }
             else
@@ -204,62 +150,30 @@ class post
                 return false;
             }
         }
-        user *getlikedby(int i)
-        {
-            return likedby[i];
-        }
-        comment getcomment(int i)
-        {
-            return comments[i];
-        }
        friend istream& operator>>(istream &input,post *p)
        {
-        input>>p->postid;
-        string x=" ";
-        while(x!=".")
-        {
-            input>>x;
-            p->text=p->text+" "+x;
-        }
-        input>>p->likes;
-        //cout<<"total no. of likes:\t"<<p->likes<<endl;
-        // p->likedby=new user*[p->likes];
-        p->templikes=p->likes;
-        for (int i = 0; i < p->likes; i++)
-        {
+            input>>p->postid;
+            string x=" ";
+            while(x!=".")
+            {
+                input>>x;
+                p->text=p->text+" "+x;
+            }
+            input>>p->likes;
+            p->templikes=p->likes;
+            for (int i = 0; i < p->likes; i++)
+            {
+                input >> p->userid[i];
+            }
+            string type,value;
+            input>>type>>value;
+            activity a1(type,value);
+            p->activityn=a1;
+
+            input>>p->shareddate;
+            p->likes=0;
             
-            input >> p->userid[i];
-            //cout<<endl<<p->userid[i]<<endl;
-        //    (p->likedby[i])->setuserid(userId);
-        //     p->addpostlike(p->likedby[i]);
-        //     string userId;
-        // input >> userId;
-        // p->likedby[i] = new user(userId);
-            // string x;
-            // input>>x;
-            // cout<<x;
-            // user *nu=new user();
-            // nu->setuserid(x);
-            // likedby[i]=nu;
-        }
-        string type,value;
-        input>>type>>value;
-        activity a1(type,value);
-        p->activityn=a1;
-
-        input>>p->shareddate;
-        p->likes=0;
-        
        }
-    void addlikedby(user *u)
-    {
-
-        
-    }
-    string* getuserid()
-    {
-        return userid;
-    }
        friend ostream&operator<<(ostream &out,post *npost)
        {
             cout<<"POST ID: "<<npost->getpostid()<<endl<<endl;
@@ -268,13 +182,13 @@ class post
             cout<<npost->getshareddate()<<endl<<endl;
             cout<<"activity";
             cout<<npost->getactivity()<<endl;
-           cout<<"likes: "<<npost->gettemplikes()<<endl;
-           if(npost->getmemorydate()!=0 &&npost->getmemorytext()!=" ")
-           {
-             cout<<"memory date: "<<npost->getmemorydate()<<endl<<endl;
-            cout<<"memory text: "<<npost->getmemorytext()<<endl<<endl;
-           }
-           return out;
+            cout<<"likes: "<<npost->gettemplikes()<<endl;
+            if(npost->getmemorydate()!=0 &&npost->getmemorytext()!=" ")
+            {
+                cout<<"memory date: "<<npost->getmemorydate()<<endl<<endl;
+                cout<<"memory text: "<<npost->getmemorytext()<<endl<<endl;
+            }
+            return out;
             
        }
 };

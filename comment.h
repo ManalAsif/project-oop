@@ -25,11 +25,9 @@ class comment
         postptr=postn;
     }
 
-    //getters
+    // //getters
     string getpostid() {return postid;}
-
-
-    //setters
+    // //setters
     void setpostid(string pid) {pid = postid;}
 
 
@@ -38,10 +36,8 @@ class comment
     {
         out<<"\tcommentid: ";
         out<<c.commentid<<endl;
-        //out<<c.userptr;
         out<<"\ttext: ";
         out<<c.text<<endl;
-        //out<<c.postptr;
         return out;
     }
     friend istream &operator>>(istream &in,comment &c)
@@ -50,19 +46,14 @@ class comment
         string uid,pid;
         in>>pid;
         c.postid = pid;
-        //cout<<pid<<endl;
         in>>c.commentid;
-        //cout<<endl<<c.commentid<<endl;
-        //c.postptr->setpostid(pid);
         in>>uid;
-        //c.userptr->setuserid(uid);
         string x = " ";
         while(x!=".")
         {
             in>>x;
             c.text=c.text+" "+x;
         }
-        //cout<<c.text<<endl;
         return in;
 
     }
@@ -70,7 +61,6 @@ class comment
     {
         return commentid;
     }
-    
     string gettext()
     {
         return text;

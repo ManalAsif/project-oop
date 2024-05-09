@@ -37,13 +37,11 @@ class page
         }
         void uploadpost(post* newpost)
         {
-         cout<<numposts;
             post **newpostlist=new post*[numposts+1];
             if(numposts!=0)
             {
                 for (int i = 0; i < numposts; i++)
                 {
-                    //cout<<"end";
                     newpostlist[i]=posts[i];
                 }
                 delete[] posts;
