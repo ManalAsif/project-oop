@@ -101,6 +101,11 @@ class post
                 userid[i]=" ";
             }
         }
+        ~post(){ for (int i = 0; i < 10; i++)
+        {
+            delete likedby[i];
+        }
+        } 
         void setmemorydate(int date){diffdate=date;}
         int getmemorydate(){return diffdate;}
         string getmemorytext(){return memorytext;}

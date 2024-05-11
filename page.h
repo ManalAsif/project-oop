@@ -24,6 +24,14 @@ class page
             numposts=0;
             likes=0;
         }
+        ~page(){
+            delete owner;
+            for (int i = 0; i < numposts; i++)
+            {
+                delete posts[i];
+            }
+            
+        }
         string getpageid(){return id;}
         user* getowner(){return owner;}
         string gettitle(){return title;}

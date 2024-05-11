@@ -24,21 +24,60 @@ class socialnetworkapp:public date
     page** likedpages;
     int numpages;
     public:
+    ~socialnetworkapp(){
+        for (int i = 0; i < numpages; i++)
+        {
+            delete likedpages[i];
+        }
+        for (int i = 0; i < numusers; i++)
+        {
+            delete users[i];
+        }
+        delete currentuser;
+        
+        
+    }
     socialnetworkapp(user* ncurrenntuser=nullptr)
     {
         currentuser=ncurrenntuser;
-        cout<<"socialnetwork app const()"<<endl;
     }
     void setcurrentuser(user *u)
     {
         *currentuser=*u;
-        cout<<u->getfirstname()<<" "<<u->getlastname()<<" succesfully set as current user"<<endl<<endl;
-        
+        cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   "<<u->getfirstname()<<" "<<u->getlastname()<<" succesfully set as current user     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"<<endl<<endl;
     }
+    void options()
+ {
+    for (int i = 0; i < currentuser->getnumfriends(); i++)
+    {
+                
+                user *f=currentuser->getfriend(i);
+                cout<<"\t\tfriend: "<<f->getid()<<endl;
+                for (int j = 0; j < f->getnumposts(); j++)
+                {
+                    post *p=f->getpost(j);
+                    cout<<"id: "<<p->getpostid()<<endl;
+                }
+                delete f;
+    }
+    for (int i = 0; i < currentuser->getnumpages(); i++)
+    {
+                page *p1=currentuser->getpage(i);
+                cout<<"\t\tpage "<<p1->getpageid()<<endl;
+                for (int j = 0; j < p1->getnumposts(); j++)
+                {
+                    post *p=p1->getpost(j);
+                    cout<<"id: "<<p->getpostid()<<endl;
+                }
+                delete p1;
+                
+    }
+            
+ }
     void run()
     {
 
-        int choice;
+        int choice=0;
         string currentUserName = currentuser->getfirstname();
         char border = '-';
 	    Color(5);
@@ -47,7 +86,7 @@ class socialnetworkapp:public date
         {
             cout << border; 
         }
-
+        Color(5);
         cout<<endl;
         cout << "Welcome, " << currentUserName << "!" << endl;
         cout << "1. View Home" << endl;
@@ -63,19 +102,9 @@ class socialnetworkapp:public date
         cout << "Enter your choice: ";
         cin >> choice;  
         Color(3);
-        if(choice==1)
-        {
-            viewhome();
-        }  
-        else if(choice==2)
-        {
-            viewtimeline();
-
-        }
-        else if(choice==3)
-        {
-            viewfriendlist();
-        }
+        if(choice==1){ viewhome();}  
+        else if(choice==2){ viewtimeline();}
+        else if(choice==3){viewfriendlist();}
         else if(choice==4)
         {
             string pageid;
@@ -91,28 +120,19 @@ class socialnetworkapp:public date
         else if(choice==5)
         {
             string postid;
+            options();
             cout<<"enter post id: "<<endl;
             cin>>postid;
             viewlikedbylist(postid);
         }
         else if(choice==6)
         {
-            for (int i = 0; i < currentuser->getnumfriends(); i++)
-            {
-                
-                user *f=currentuser->getfriend(i);
-                cout<<"\t\tfriend: "<<f->getid()<<endl;
-                for (int j = 0; j < f->getnumposts(); j++)
-                {
-                    post *p=f->getpost(j);
-                    cout<<"id: "<<p->getpostid()<<endl;
-                }
-            }
+            options();
+            
             string postid,text;
             cout<<"\t\tenter post id: ";
             cin>>postid;
             cout<<"\t\tenter comment: ";
-     
             string x=" ";
             while(x!=".")
             {
@@ -120,6 +140,7 @@ class socialnetworkapp:public date
                 text=text+" "+x;
             }
             Color(4);
+           
             addcommenttopost(postid,text);
 
         }
@@ -142,24 +163,13 @@ class socialnetworkapp:public date
                 text=text+" "+x;
             }
             sharememory(postid,text);
-            cout<<"\nshare memory done"<<endl;
+            cout<<"\n\n\n MEMORY SHARED"<<endl;
             viewtimeline();
         }
         else if(choice==8)
         {
             string id;
-            for (int i = 0; i < currentuser->getnumfriends(); i++)
-            {
-                
-                user *f=currentuser->getfriend(i);
-                cout<<"\t\tfriend: "<<f->getid()<<endl;
-                for (int j = 0; j < f->getnumposts(); j++)
-                {
-                    post *p=f->getpost(j);
-                    cout<<"id: "<<p->getpostid()<<endl;
-                }
-            }
-            
+            options();
             cout<<"enter id: ";
             cin>>id;
             viewpost(id);
@@ -167,22 +177,12 @@ class socialnetworkapp:public date
         else if(choice==9)
         {
             string id;
-            for (int i = 0; i < currentuser->getnumfriends(); i++)
-            {
-                
-                user *f=currentuser->getfriend(i);
-                cout<<"\t\tfriend: "<<f->getid()<<endl;
-                for (int j = 0; j < f->getnumposts(); j++)
-                {
-                    post *p=f->getpost(j);
-                    cout<<"id: "<<p->getpostid()<<endl;
-                }
-            }
-            
+            options();
             cout<<"enter id: ";
             cin>>id;
             likepost(id);
-         }
+        }
+        
 
 
     }
@@ -226,61 +226,65 @@ class socialnetworkapp:public date
     }
     void likepost(string id)
     {
-        for (int i = 0; i < currentuser->getnumfriends(); i++)
+        post*currentpost;
+        if(checkfriendpost(id))
         {
-            user*frienduser=currentuser->getfriend(i);
-            for (int j = 0; j < frienduser->getnumposts(); j++)
-            {
-               post*currentpost=frienduser->getpost(j);
-               if(currentpost->getpostid()==id)
-               {
-                if(currentpost->addpostlike(currentuser))
-                {
-                    currentpost->adduserid(currentuser->getId());
-                cout<<"post with id "<<id<<" liked succesfully"<<endl;
-                }
-                else
-                {
-                    cout<<"limits of number of likes exceeded"<<endl;
-
-                } 
-                Color(8);
-                cout<<"NEW LIKED BY LIST: "<<endl;
-                cout<<"ID: "<<currentuser->getId()<<endl<<endl;
-                cout<<"name:"<<currentuser->getfirstname()<<" "<<currentuser->getlastname()<<endl<<endl;
-                viewlikedbylist(id);
-                
-               }
-            }
-            
+            currentpost=checkfriendpost(id);
         }
+        else if(checkpagepost(id))
+        {
+            currentpost=checkpagepost(id);
+        }
+        else
+        {
+            cout<<"invalid post id please (you can only view posts of your friends and pages you have liked ) "<<endl;
+            return;
+        }
+
+        if(currentpost->addpostlike(currentuser))
+        {
+            currentpost->adduserid(currentuser->getId());
+            cout<<"post with id "<<id<<" liked succesfully"<<endl;
+        }
+        else
+        {
+            cout<<"limits of number of likes exceeded"<<endl;
+        } 
+        Color(8);
+        cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<< NEW LIKED BY LIST >>>>>>>>>>>>>>>>>>>>>>>>>>>> "<<endl;
+        cout<<"ID: "<<currentuser->getId()<<endl<<endl;
+        cout<<"name:"<<currentuser->getfirstname()<<" "<<currentuser->getlastname()<<endl<<endl;
+        viewlikedbylist(id);
+        return;
+        
         
 
     }
     void viewpost(string id)
     {
-         for (int i = 0; i < currentuser->getnumfriends(); i++)
+        post*currentpost;
+        if(checkfriendpost(id))
         {
-            user*frienduser=currentuser->getfriend(i);
-            for (int j = 0; j < frienduser->getnumposts(); j++)
-            {
-               post*currentpost=frienduser->getpost(j);
-               if(currentpost->getpostid()==id)
-               {
-                cout<<currentpost;
-                viewcomment(id);
-                viewlikedbylist(id);
-
-                
-               }
-            }
-            
+            currentpost=checkfriendpost(id);           
         }
+        else if(checkpagepost(id))
+        {
+            currentpost=checkpagepost(id);
+        }
+        else
+        {
+            cout<<"invalid post id please (you can only view posts of your friends and pages you have liked ) "<<endl;
+            return;
+        }
+            
+        cout<<currentpost;
+        viewcomment(id);
+        viewlikedbylist(id);
+        
     }
     void sharememory(string postid,string text)
 {
     date currentdate(27,4,2024);
-    cout<<currentdate;
     for (int i = 0; i < currentuser->getnumposts(); i++)
         {
             post *npost=new post;
@@ -288,7 +292,7 @@ class socialnetworkapp:public date
             date postdate= (*npost).getshareddate();
             if((currentdate.differenceInSeconds(postdate)%31536000)==0 && npost->getpostid()==postid)
             {   
-                cout<<text;
+                
                 int diff=currentdate.getYear()-postdate.getYear();
                 npost->setmemorydate(diff);
                 npost->setmemorytext(text);
@@ -296,6 +300,36 @@ class socialnetworkapp:public date
         }
 }
     void addcommenttopost(string postid, string commenttext)
+    {  
+        post* currentpost;
+        if(checkfriendpost(postid))
+        {
+            currentpost = checkfriendpost(postid);
+        }
+        else if(checkpagepost(postid))
+        {
+            currentpost = checkpagepost(postid);
+        }
+        else
+        {
+            cout<<"invalid post id please (you can only view posts of your friends and pages you have liked ) "<<endl;
+            return;
+        }
+        viewcomment(postid);
+        comment newcomment("c14", currentuser, commenttext, currentpost);
+        if (currentpost->addcomment(newcomment))
+        {                    
+           cout<<newcomment;
+           cout<<currentpost;
+           cout << "Comment added successfully to the post with ID " << postid << endl;
+           return;
+        }
+        else
+        {
+            cout << "Failed to add comment. Maximum comment limit reached for this post." << endl;
+        }
+    }
+    post* &checkfriendpost(string postid)
 {
     for (int i = 0; i < currentuser->getnumfriends(); i++)
     {
@@ -305,160 +339,78 @@ class socialnetworkapp:public date
             post* currentpost = frienduser->getpost(j);
             if (currentpost->getpostid() == postid)
             {
-                viewcomment(postid);
-
-                comment newcomment("c14", currentuser, commenttext, currentpost);
-                if (currentpost->addcomment(newcomment))
-                {
-                    
-                            comment c=(currentpost->getcomment(i));
-                            // cout<<c;
-                            cout<<newcomment;
-                    cout << "Comment added successfully to the post with ID " << postid << endl;
-                }
-                else
-                {
-                    cout << "Failed to add comment. Maximum comment limit reached for this post." << endl;
-                }
+                return currentpost;
             }
+            
         }
     }
-    for (int i = 0; i < currentuser->getnumpages(); i++)
+    // cout<<"invalid post id please (you can only view posts of your friends) "<<endl;
+    // return false;
+}
+    post* &checkpagepost(string postid)
+{
+     for (int i = 0; i < currentuser->getnumpages(); i++)
         {
            page *currentpage=(*currentuser).getpage(i);
-           cout<<(*currentpage).getnumposts()<<endl;
-           Color(3);
-           cout<<"--------------------------------------------------------------------"<<endl<<endl;
-           cout<<i+1<<")   PAGE:     "<<currentpage->getpageid()<<endl<<endl;
            for(int j=0;j<(*currentpage).getnumposts();j++)
            {
                 post *currentpost=(*currentpage).getpost(j);
                 if (currentpost->getpostid() == postid)
             {
-                viewcomment(postid);
-
-                comment newcomment("c14", currentuser, commenttext, currentpost);
-                if (currentpost->addcomment(newcomment))
-                {
-                    
-                            comment c=(currentpost->getcomment(i));
-                            // cout<<c;
-                            cout<<newcomment;
-                    cout << "Comment added successfully to the post with ID " << postid << endl;
-                }
-                else
-                {
-                    cout << "Failed to add comment. Maximum comment limit reached for this post." << endl;
-                }
+                return currentpost;
             }
-                
-            }
-
+           }
         }
         
-    
 }
-    void viewcomment(string postid)
+    void viewcomment(string id)
     {
+        post*currentpost;
+        if(checkfriendpost(id))
+        {
+            currentpost=checkfriendpost(id);           
+        }
+        else if(checkpagepost(id))
+        {
+            currentpost=checkpagepost(id);
+        }
+        else
+        {
+            for (int i = 0; i < currentuser->getnumposts(); i++)
+        {
+            post *currpost=currentuser->getpost(i);
+            if (currpost->getpostid() == id)
+            {
+                currentpost=currpost;
+            }
+            
+        }            
+        }
         Color(4);
         cout<<"<<<<<<<<<<<<<<<<<<<<< COMMENTS >>>>>>>>>>>>>>>>>>>>>"<<endl;
-        for (int i = 0; i < currentuser->getnumfriends(); i++)
-       {
-        user* frienduser = currentuser->getfriend(i);
-        for (int j = 0; j < frienduser->getnumposts(); j++)
+        int numcomments;
+        string filename = "comment.txt";
+        ifstream file(filename);
+        if (!file.is_open())
         {
-            post* currentpost = frienduser->getpost(j);
-            if (currentpost->getpostid() == postid)
-            {
-                int numcomments;
-                string filename = "comment.txt";
-                ifstream file(filename);
-                if (!file.is_open())
-                {
-                    cerr << "Error: Unable to open file " << filename << endl;
-                    return;
-                }
+            cerr << "Error: Unable to open file " << filename << endl;
+            return;
+        }
                 
-                file >> numcomments;
-                file.ignore(); 
-                cout << "Comments for post " << postid << ":" << endl;
-                for (int k = 0; k < numcomments; k++)
-                {
-                    comment c;
-                    file >> c;
-                    if (c.getpostid() == postid)
-                    {
-                        cout << c;
-                        currentpost->addcomment(c);
-                    }
-                }
-            }
-        }
-       }
-        for (int i = 0; i < currentuser->getnumpages(); i++)
+        file >> numcomments;
+        file.ignore(); 
+        cout << "Comments for post " << id << ":" << endl;
+        for (int k = 0; k < numcomments; k++)
         {
-           page *currentpage=(*currentuser).getpage(i);
-            for(int j=0;j<(*currentpage).getnumposts();j++)
+            comment c;
+            file >> c;
+            if (c.getpostid() == id)
             {
-                post *currentpost=(*currentpage).getpost(j);
-                if (currentpost->getpostid() == postid)
-                {
-                    int numcomments;
-                    string filename = "comment.txt";
-                    ifstream file(filename);
-                    if (!file.is_open())
-                    {
-                        cerr << "Error: Unable to open file " << filename << endl;
-                        return;
-                    }
-                    
-                    file >> numcomments;
-                    file.ignore(); // Ignore the newline character
-                    
-                    cout << "Comments for post " << postid << ":" << endl;
-                    for (int k = 0; k < numcomments; k++)
-                    {
-                        comment c;
-                        file >> c;
-                        if (c.getpostid() == postid)
-                        {
-                            cout << c;
-                            currentpost->addcomment(c);
-                        }
-                    }
-                }
+                cout << c;
+                currentpost->addcomment(c);
             }
         }
-        for (int i = 0; i < currentuser->getnumposts(); i++)
-        {
-            post *currentpost=currentuser->getpost(i);
-            if (currentpost->getpostid() == postid)
-                {
-                    int numcomments;
-                    string filename = "comment.txt";
-                    ifstream file(filename);
-                    if (!file.is_open())
-                    {
-                        cerr << "Error: Unable to open file " << filename << endl;
-                        return;
-                    }
-                    
-                    file >> numcomments;
-                    file.ignore(); // Ignore the newline character
-                    
-                    cout << "Comments for post " << postid << ":" << endl;
-                    for (int k = 0; k < numcomments; k++)
-                    {
-                        comment c;
-                        file >> c;
-                        if (c.getpostid() == postid)
-                        {
-                            cout << c;
-                            currentpost->addcomment(c);
-                        }
-                    }        
-                }
-        }
+            
         
     }
     void viewhome()
@@ -566,7 +518,7 @@ class socialnetworkapp:public date
         
         for (int i = 0; i < currentuser->getnumpages(); i++)
         {
-            //cout<<"pages..................."<<endl;
+           
             string x;
             file.clear();
             file.seekg(0, std::ios::beg);
@@ -592,8 +544,7 @@ class socialnetworkapp:public date
                     post *p=new post;
                     file>>p;
                     f->uploadpost(p);
-                    // cout<<" founddddddddddddddid:"<<p->getpostid()<<endl;
-                    // cout<<p->gettext()<<endl;
+                    
                 }
             }
            
@@ -601,45 +552,36 @@ class socialnetworkapp:public date
         file.close();
 
     }
-    post *findpostbyid(string id)
-    {
-        string filename="post.txt";
-        ifstream file(filename);
-        int count;
-        file>>count;
-        post*p=new post;
-        for (int i = 0; i < count*5; i++)
-        {
-            string line;
-            streampos currentPosition = file.tellg();
-            getline(file,line);
-             //streampos currentPosition = file.tellg();
-            size_t pos = line.find(' ');
-            string postid = line.substr(0, pos);
-            if(postid==id)
-            {
-                file.seekg(currentPosition);
-                file>>p;
-                break;
-
-            }
-        }
-        return p;
-    }
     void viewlikedbylist(string id)
     {  Color(8);
-        post *p=findpostbyid(id);
+
+       post *p;
+       if(checkfriendpost(id))
+       {
+            p=checkfriendpost(id);
+       }
+       else if(checkpagepost(id))
+       {
+            p=checkpagepost(id);
+       }
+       else
+        {
+            for (int i = 0; i < currentuser->getnumposts(); i++)
+        {
+            post *currpost=currentuser->getpost(i);
+            if (currpost->getpostid() == id)
+            {
+                p=currpost;
+            }
+        }
+        }
         cout<<"<<<<<<<<<<<<<<<<<<<<<<<liked by>>>>>>>>>>>>>>>>>>>>>"<<endl;
-               string *list=p->getuserid();
-                string filename1="user.txt";
-                ifstream file(filename1); 
-                //user **userlist=new user*[p->getlikes()];S
+        string *list=p->getuserid();
+        string filename1="user.txt";
+        ifstream file(filename1); 
+        
                 int num;
                 num=p->gettemplikes();
-                // for(int i=0;list[i]!=" ";i++)
-                // {
-                //     num++;
-                // }
                 for (int n = 0; n <num; n++)
                 {
                     file.clear();
@@ -660,22 +602,13 @@ class socialnetworkapp:public date
                         string x=" ";
                         getline(file,x);
                     }
-                   
                     user u2;
                     file>>u2;
-                    // cout<<u2.getId()<<endl<<"uuu"<<endl;
                     user *uptr=&u2;
-                    // cout<<uptr->getId();
                     p->addpostlike(uptr);
-
                     cout<<endl<<"ID:"<<p->getlikedby(n)->getId()<<endl;
                     cout<<"Name:  "<<p->getlikedby(n)->getfirstname()<<" "<<p->getlikedby(n)->getlastname()<<endl;                                                       
                 }
-               
-
-                
-                
-        
     }
     void setfriendnames(string s)
     {
@@ -804,7 +737,6 @@ int main()
         getline(file,x);
     }
     file>>u;
-    cout<<u.getnumfriends();
     user *uptr=&u;
     socialnetworkapp s1(uptr);
     s1.setcurrentuser(uptr);
