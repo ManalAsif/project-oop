@@ -2,10 +2,11 @@
 #define post_h
 #include <iostream>
 #include <ctime>
-#include "user.h"
-#include "page.h"
+//#include "user.h"
+//#include "page.h"
 #include "comment.h"
-
+class page;
+class user;
 using namespace std;
 class activity{
     private:
@@ -101,11 +102,7 @@ class post
                 userid[i]=" ";
             }
         }
-        ~post(){ for (int i = 0; i < 10; i++)
-        {
-            delete likedby[i];
-        }
-        } 
+
         void setmemorydate(int date){diffdate=date;}
         int getmemorydate(){return diffdate;}
         string getmemorytext(){return memorytext;}

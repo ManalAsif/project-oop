@@ -58,7 +58,7 @@ class socialnetworkapp:public date
                     post *p=f->getpost(j);
                     cout<<"id: "<<p->getpostid()<<endl;
                 }
-                delete f;
+              
     }
     for (int i = 0; i < currentuser->getnumpages(); i++)
     {
@@ -69,7 +69,6 @@ class socialnetworkapp:public date
                     post *p=p1->getpost(j);
                     cout<<"id: "<<p->getpostid()<<endl;
                 }
-                delete p1;
                 
     }
             
@@ -86,6 +85,8 @@ class socialnetworkapp:public date
         {
             cout << border; 
         }
+        while(choice!=10)
+        {
         Color(5);
         cout<<endl;
         cout << "Welcome, " << currentUserName << "!" << endl;
@@ -182,7 +183,7 @@ class socialnetworkapp:public date
             cin>>id;
             likepost(id);
         }
-        
+        }
 
 
     }
@@ -240,7 +241,9 @@ class socialnetworkapp:public date
             cout<<"invalid post id please (you can only view posts of your friends and pages you have liked ) "<<endl;
             return;
         }
-
+        viewlikedbylist(id);
+        cout<<endl<<"ID:"<<currentuser->getId()<<endl;
+        cout<<"Name:  "<<currentuser->getfirstname()<<" "<<currentuser->getlastname()<<endl<<endl;
         if(currentpost->addpostlike(currentuser))
         {
             currentpost->adduserid(currentuser->getId());
@@ -251,10 +254,8 @@ class socialnetworkapp:public date
             cout<<"limits of number of likes exceeded"<<endl;
         } 
         Color(8);
-        cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<< NEW LIKED BY LIST >>>>>>>>>>>>>>>>>>>>>>>>>>>> "<<endl;
-        cout<<"ID: "<<currentuser->getId()<<endl<<endl;
-        cout<<"name:"<<currentuser->getfirstname()<<" "<<currentuser->getlastname()<<endl<<endl;
-        viewlikedbylist(id);
+        
+        
         return;
         
         
@@ -279,7 +280,7 @@ class socialnetworkapp:public date
             
         cout<<currentpost;
         viewcomment(id);
-        viewlikedbylist(id);
+        //viewlikedbylist(id);
         
     }
     void sharememory(string postid,string text)
@@ -329,7 +330,7 @@ class socialnetworkapp:public date
             cout << "Failed to add comment. Maximum comment limit reached for this post." << endl;
         }
     }
-    post* &checkfriendpost(string postid)
+    post* checkfriendpost(string postid)
 {
     for (int i = 0; i < currentuser->getnumfriends(); i++)
     {
@@ -347,7 +348,7 @@ class socialnetworkapp:public date
     // cout<<"invalid post id please (you can only view posts of your friends) "<<endl;
     // return false;
 }
-    post* &checkpagepost(string postid)
+    post* checkpagepost(string postid)
 {
      for (int i = 0; i < currentuser->getnumpages(); i++)
         {
@@ -434,7 +435,7 @@ class socialnetworkapp:public date
                 Color(5);
                 cout<<post;
                 viewcomment(post->getpostid());
-                viewlikedbylist(post->getpostid());               
+                //viewlikedbylist(post->getpostid());               
             }
         }
     }
@@ -456,7 +457,7 @@ class socialnetworkapp:public date
                     Color(5);
                     cout<<post;
                     viewcomment(post->getpostid());
-                    viewlikedbylist(post->getpostid());
+                    //viewlikedbylist(post->getpostid());
                 }
             }
         
@@ -706,7 +707,7 @@ class socialnetworkapp:public date
             Color(5);
             cout<<npost;
             viewcomment(npost->getpostid());
-            viewlikedbylist(npost->getpostid());
+            //viewlikedbylist(npost->getpostid());
             
         }
         
