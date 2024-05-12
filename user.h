@@ -47,10 +47,8 @@ class user{
             friendlist=friendlistn;
             likedpages=likedpagesn;
             timeline=timelinen;
-            //cout<<"user const()"<<firstname<<endl;
 
         }
-
     friend istream& operator>>(istream& input, user& u) {
     input >> u.id >> u.firstname >> u.lastname;
     

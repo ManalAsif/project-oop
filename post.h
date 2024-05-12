@@ -102,7 +102,6 @@ class post
                 userid[i]=" ";
             }
         }
-
         void setmemorydate(int date){diffdate=date;}
         int getmemorydate(){return diffdate;}
         string getmemorytext(){return memorytext;}

@@ -280,7 +280,7 @@ class socialnetworkapp:public date
             
         cout<<currentpost;
         viewcomment(id);
-        //viewlikedbylist(id);
+      
         
     }
     void sharememory(string postid,string text)
@@ -434,8 +434,7 @@ class socialnetworkapp:public date
                 cout<<"--------------------------------------------------------------------"<<endl<<endl;
                 Color(5);
                 cout<<post;
-                viewcomment(post->getpostid());
-                //viewlikedbylist(post->getpostid());               
+                viewcomment(post->getpostid());          
             }
         }
     }
@@ -457,7 +456,7 @@ class socialnetworkapp:public date
                     Color(5);
                     cout<<post;
                     viewcomment(post->getpostid());
-                    //viewlikedbylist(post->getpostid());
+                  
                 }
             }
         
@@ -707,7 +706,7 @@ class socialnetworkapp:public date
             Color(5);
             cout<<npost;
             viewcomment(npost->getpostid());
-            //viewlikedbylist(npost->getpostid());
+         
             
         }
         
@@ -730,7 +729,6 @@ int main()
             count=c-'0';   
         }
     }
-
     for (int i = 0; i < count-1; i++)
     {
     
